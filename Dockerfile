@@ -41,7 +41,6 @@ RUN export CCACHE_PATH=$(which ccache)
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod a+x /usr/local/bin/repo
 
 FROM aosp_base as aosp_build
-# Set the working directory to /root
 WORKDIR /aosp
 
 CMD ["bash"]
