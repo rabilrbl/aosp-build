@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -y \
     openssl \
     libssl-dev \
     fontconfig \
-    jq \
     openjdk-8-jdk \
     gperf \
     python-is-python3 \
