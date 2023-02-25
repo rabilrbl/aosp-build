@@ -32,6 +32,11 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Setup CCACHE
+ENV USE_CCACHE=1
+# Find the path to the ccache binary
+RUN export CCACHE_PATH=$(which ccache)
+
 # Install repo
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod a+x /usr/local/bin/repo
 
