@@ -30,8 +30,8 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ${{ github.repository }}
-            ghcr.io/${{ github.repository }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=schedule
