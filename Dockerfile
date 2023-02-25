@@ -3,7 +3,6 @@ FROM ubuntu:latest
 LABEL maintainer="Mohammed Rabil <rabil@techie.com>"
 
 RUN apt-get update && apt-get install -y \
-    repo \
     git-core \
     gnupg \
     flex \
@@ -32,6 +31,9 @@ RUN apt-get update && apt-get install -y \
     ccache
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install repo
+RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod a+x /usr/local/bin/repo
 
 # Set the working directory to /root
 WORKDIR /aosp
