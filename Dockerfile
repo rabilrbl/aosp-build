@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:latest as aosp_base
 
 LABEL maintainer="Mohammed Rabil <rabil@techie.com>"
 
@@ -40,6 +40,7 @@ RUN export CCACHE_PATH=$(which ccache)
 # Install repo
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod a+x /usr/local/bin/repo
 
+FROM aosp_base as aosp_build
 # Set the working directory to /root
 WORKDIR /aosp
 
