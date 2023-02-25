@@ -38,7 +38,6 @@ RUN export CCACHE_PATH=$(which ccache)
 # Install repo
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod a+x /usr/local/bin/repo
 
-FROM aosp_base as aosp_build
-WORKDIR /aosp
-
-CMD ["bash"]
+# There aren't any command to download or build sources as well, you should mount a host path to download and build them. 
+# Remember, this image only provides a build environment.
+ENTRYPOINT [ "sh", "-c" ]
