@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     fontconfig \
     openjdk-8-jdk \
     gperf \
+    python3 \
     python-is-python3 \
     ccache
 
