@@ -1,6 +1,16 @@
 FROM ubuntu:latest as aosp_base
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
+RUN apt-get update && \
+      apt-get -y install sudo
+
+RUN useradd -m aospb && echo "aospb:aospb" | chpasswd && adduser aospb sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+USER aospb
+
+WORKDIR /home/aospb
+
+RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     git-core \
     gnupg \
     flex \
@@ -28,16 +38,22 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     python-is-python3 \
     ccache
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Setup git config
+RUN git config --global user.name "${GIT_NAME}"
+RUN git config --global user.email "${GIT_EMAIL}"
+# Enable color output (optional)
+RUN git config --global color.ui true
+# Pull rebase by default or supply ARG PULL_REBASE=false
+ARG PULL_REBASE=true
+ENV PULL_REBASE=${PULL_REBASE}
+RUN git config --global pull.rebase ${PULL_REBASE}
 
-# Setup CCACHE
-ENV USE_CCACHE=1
-# Find the path to the ccache binary
-RUN export CCACHE_PATH=$(which ccache)
+# Install and setup latest repo, if needed
+RUN curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo \
+     && chmod a+x ~/bin/repo && export PATH=~/bin:$PATH \
+     && echo "export PATH=~/bin:$PATH" >> ~/.bashrc && source ~/.bashrc \
+     && repo --version
 
-# Install repo
-RUN curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo && chmod a+x /usr/local/bin/repo
+RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
-# There aren't any command to download or build sources as well, you should mount a host path to download and build them. 
-# Remember, this image only provides a build environment.
-ENTRYPOINT [ "sh", "-c" ]
+ENTRYPOINT [ "bash", "-c" ]
