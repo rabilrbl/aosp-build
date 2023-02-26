@@ -38,6 +38,11 @@ RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     python-is-python3 \
     ccache
 
+# Setup CCACHE
+ENV USE_CCACHE=1
+# Find path to ccache
+RUN export CCACHE_PATH=$(which ccache)
+
 # Setup git config
 RUN git config --global user.name "${GIT_NAME}"
 RUN git config --global user.email "${GIT_EMAIL}"
