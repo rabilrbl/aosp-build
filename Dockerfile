@@ -1,5 +1,7 @@
 FROM ubuntu:latest as aosp_base
 
+SHELL [ "bash", "-c" ]
+
 RUN apt-get update && \
       apt-get -y install sudo
 
