@@ -62,6 +62,14 @@ RUN sudo curl -s https://storage.googleapis.com/git-repo-downloads/repo -o /usr/
         && sudo chmod a+x /usr/local/bin/repo \
         && repo --version
 
+# Download and install latest LLVM tools
+RUN sudo curl -s https://apt.llvm.org/llvm.sh > /tmp/llvm.sh \
+        && sudo chmod a+x /tmp/llvm.sh \
+        && sudo /tmp/llvm.sh \
+        && export LLVM_VERSION=$(cat /tmp/llvm.sh | grep -oP 'CURRENT_LLVM_STABLE=(\K[0-9.]+)') \
+        && for i in $(ls /usr/lib/llvm-$LLVM_VERSION/bin) ; do sudo ln -s /usr/lib/llvm-$LLVM_VERSION/bin/$i /usr/bin/$i ; done \
+        && sudo rm /tmp/llvm.sh
+
 RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 
 CMD [ "bash", "-c" ]
