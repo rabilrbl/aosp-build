@@ -38,7 +38,11 @@ RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     gperf \
     python3 \
     python-is-python3 \
-    ccache
+    ccache \
+    lsb-release \
+    wget \
+    software-properties-common \
+    gnupg
 
 # Setup CCACHE
 ENV USE_CCACHE=1
