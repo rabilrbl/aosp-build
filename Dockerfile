@@ -22,8 +22,8 @@ RUN sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y \
     curl \
     zlib1g-dev \
     libc6-dev-i386 \
-    libncurses5 \
-    lib32ncurses5-dev \
+    libncurses6 \
+    libncurses-dev \
     x11proto-core-dev \
     libx11-dev \
     lib32z1-dev \
