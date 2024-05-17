@@ -3,7 +3,7 @@ FROM ubuntu:latest as aosp_base
 SHELL [ "bash", "-c" ]
 
 RUN apt-get update && \
-      apt-get -y install sudo
+      apt-get -y install sudo adduser
 
 RUN useradd -m aospb && echo "aospb:aospb" | chpasswd && adduser aospb sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
